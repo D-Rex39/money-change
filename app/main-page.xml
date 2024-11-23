@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
+    <ActionBar title="通貨スキャナー" />
+    
+    <TabView selectedIndex="0" androidTabsPosition="bottom">
+        <!-- スキャンタブ -->
+        <TabViewItem title="スキャン">
+            <GridLayout rows="auto, *, auto">
+                <!-- 通貨選択部分 -->
+                <GridLayout row="0" columns="*, auto, *" class="p-4">
+                    <DropDown items="{{ availableCurrencies }}" 
+                              selectedIndex="0"
+                              col="0"
+                              class="text-lg"
+                              textField="name"
+                              selectedIndexChanged="{{ onFromCurrencyChanged }}" />
+                    
+                    <Label text="→" col="1" class="text-xl text-center mx-2" />
+                    
+                    <DropDown items="{{ availableCurrencies }}"
+                              selectedIndex="1"
+                              col="2"
+                              class="text-lg"
+                              textField="name"
+                              selectedIndexChanged="{{ onToCurrencyChanged }}" />
+                </GridLayout>
+
+                <!-- カメラビュー -->
+                <ContentView row="1" id="cameraView">
+                    <!-- カメラプレビューが表示される -->
+                </ContentView>
+
+                <!-- スキャン結果表示部分 -->
+                <StackLayout row="2" class="p-4 bg-white">
+                    <Label text="スキャン結果" class="text-lg font-bold" />
+                    <GridLayout columns="*, auto" class="mt-2">
+                        <Label col="0" text="{{ lastScannedAmount + ' ' + fromCurrency.symbol }}" 
+                               class="text-xl" />
+                        <Label col="1" text="{{ convertedAmount + ' ' + toCurrency.symbol }}"
+                               class="text-xl text-green-600" />
+                    </GridLayout>
+                </StackLayout>
+            </GridLayout>
+        </TabViewItem>
+
+        <!-- レート確認タブ -->
+        <TabViewItem title="レート">
+            <StackLayout class="p-4">
+                <Label text="現在のレート" class="text-xl font-bold mb-4" />
+                <GridLayout columns="auto, *, auto" class="mb-4">
+                    <Label col="0" text="{{ fromCurrency.name }}" class="text-lg" />
+                    <Label col="1" text="→" class="text-lg text-center" />
+                    <Label col="2" text="{{ toCurrency.name }}" class="text-lg" />
+                </GridLayout>
+                <Label text="{{ '1 ' + fromCurrency.symbol + ' = ' + currentRate + ' ' + toCurrency.symbol }}"
+                       class="text-2xl text-center text-green-600" />
+                <Button text="更新" tap="{{ updateCurrentRate }}" class="-primary mt-4" />
+            </StackLayout>
+        </TabViewItem>
+    </TabView>
+</Page>

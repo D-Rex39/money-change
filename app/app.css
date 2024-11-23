@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+TabView {
+    tab-text-color: #666;
+    selected-tab-text-color: #000;
+    tab-background-color: #f8f8f8;
+}
+
+.camera-preview {
+    width: 100%;
+    height: 100%;
+}
